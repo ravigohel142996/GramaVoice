@@ -102,6 +102,45 @@ Comprehensive documentation available:
 
 ## Quick Start
 
+### 🚀 Running the Application
+
+#### Prerequisites
+- Python 3.8 or higher
+- pip package manager
+
+#### Quick Start (Automatic)
+```bash
+# Linux/Mac
+./start.sh
+
+# Windows
+start.bat
+```
+
+#### Manual Start
+
+**1. Install Dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**2. Start Backend**
+```bash
+python backend/app/main.py
+```
+Backend will run at: http://localhost:8000
+
+**3. Start Frontend (in another terminal)**
+```bash
+streamlit run frontend/app.py
+```
+Frontend will open at: http://localhost:8501
+
+**4. Seed Demo Data**
+```bash
+curl -X POST http://localhost:8000/api/seed-demo
+```
+
 ### For Users
 Call: **1800-GRAMA-HELP**
 - Select your language
@@ -109,13 +148,15 @@ Call: **1800-GRAMA-HELP**
 - Receive instant voice response
 
 ### For Government Officials
-Access the dashboard at: [Dashboard URL]
+Access the dashboard at: http://localhost:8501
 - View real-time complaint maps
 - Monitor resolution metrics
 - Get predictive alerts
 
 ### For Developers
-Coming soon: API documentation and integration guides
+- **Technical Guide**: [TECHNICAL_GUIDE.md](./TECHNICAL_GUIDE.md)
+- **Deployment Guide**: [DEPLOYMENT.md](./DEPLOYMENT.md)
+- **API Documentation**: http://localhost:8000/docs (when backend is running)
 
 ## Roadmap
 
