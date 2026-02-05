@@ -5,6 +5,20 @@
 
 ---
 
+## ⚡ Cloud-Ready Demo Version
+
+**This version has been refactored for Streamlit Cloud deployment!**
+
+- ✅ **No backend server required** - Fully standalone Streamlit app
+- ✅ **No audio/microphone dependencies** - Text-based input for demo
+- ✅ **Cloud-supported packages only** - Deploys without errors
+- ✅ **Production-ready UI** - Professional government-style interface
+- ✅ **All features working** - Intent detection, AI responses, analytics dashboard
+
+**Deploy in 2 minutes:** Just push to GitHub and connect to Streamlit Cloud!
+
+---
+
 ## The Problem
 
 My grandmother walked 8 kilometers to check her pension status. The government clerk told her to "check online." She can't read. She can't use apps. There is no online for her.
@@ -102,44 +116,50 @@ Comprehensive documentation available:
 
 ## Quick Start
 
-### 🚀 Running the Application
+### 🚀 Running the Application (Cloud-Ready Version)
 
 #### Prerequisites
 - Python 3.8 or higher
 - pip package manager
 
-#### Quick Start (Automatic)
-```bash
-# Linux/Mac
-./start.sh
-
-# Windows
-start.bat
-```
-
-#### Manual Start
+#### Local Development
 
 **1. Install Dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-**2. Start Backend**
+**2. Run the App**
 ```bash
-python backend/app/main.py
+streamlit run app.py
 ```
-Backend will run at: http://localhost:8000
+App will open at: http://localhost:8501
 
-**3. Start Frontend (in another terminal)**
-```bash
-streamlit run frontend/app.py
-```
-Frontend will open at: http://localhost:8501
+That's it! No backend server needed. The app is fully self-contained.
 
-**4. Seed Demo Data**
-```bash
-curl -X POST http://localhost:8000/api/seed-demo
-```
+#### Deploy to Streamlit Cloud
+
+**Simple 3-Step Deployment:**
+
+1. **Push to GitHub** (already done!)
+2. **Go to** [share.streamlit.io](https://share.streamlit.io)
+3. **Select:**
+   - Repository: `ravigohel142996/GramaVoice`
+   - Branch: `copilot/refactor-gramavoice-app`
+   - Main file: `app.py`
+4. **Click Deploy!**
+
+No environment variables or secrets needed for demo. The app works out of the box!
+
+#### Features
+- ✅ No system dependencies (audio/microphone removed)
+- ✅ Text-based input (simulating voice in demo)
+- ✅ AI-powered intent detection
+- ✅ Multi-language support (10+ Indian languages)
+- ✅ Real-time analytics dashboard
+- ✅ Professional government-style UI
+- ✅ Query history tracking
+- ✅ Demo data included
 
 ### For Users
 Call: **1800-GRAMA-HELP**
