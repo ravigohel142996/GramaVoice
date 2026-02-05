@@ -2,6 +2,12 @@
 AI Service for speech and language processing
 Simulates integration with OpenAI Whisper and Amazon Bedrock
 """
+import sys
+import os
+
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
+
 import random
 from typing import Dict, Any, Optional
 from loguru import logger
