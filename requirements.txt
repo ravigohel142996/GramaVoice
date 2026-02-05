@@ -17,3 +17,4 @@ openai
 
 # Utilities
 python-dotenv
+plotly
