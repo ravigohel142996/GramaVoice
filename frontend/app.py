@@ -1,13 +1,17 @@
 """
 GramaVoice Frontend - Streamlit Application
 Professional UI for Voice-Powered Rural Service Gateway
+
+CLOUD DEMO MODE:
+This version runs entirely on Streamlit Cloud without any external backend.
+All data is generated internally using mock/demo functions.
 """
 import streamlit as st
-import requests
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
+import random
 import sys
 import os
 
@@ -16,8 +20,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 
 from config.settings import (
     APP_NAME,
-    API_HOST,
-    API_PORT,
     SUPPORTED_LANGUAGES,
     SERVICE_CATEGORIES,
 )
@@ -29,9 +31,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-# API Base URL
-API_BASE_URL = f"http://{API_HOST}:{API_PORT}/api"
 
 # Custom CSS for professional government-style UI
 st.markdown(
@@ -169,6 +168,169 @@ st.markdown(
 )
 
 
+# ==================== INTERNAL MOCK DATA FUNCTIONS ====================
+# Cloud Demo Mode: These functions replace external API calls
+
+
+def get_dashboard_data(days=30):
+    """
+    Generate realistic dashboard statistics for demo purposes.
+    This replaces the external API call to /dashboard-data.
+    
+    Args:
+        days: Number of days to generate data for
+        
+    Returns:
+        dict: Dashboard data with metrics and charts
+    """
+    # Generate consistent demo statistics
+    total_queries = random.randint(1200, 1300)
+    total_complaints = random.randint(300, 400)
+    resolved_complaints = int(total_complaints * random.uniform(0.75, 0.85))
+    resolution_rate = (resolved_complaints / total_complaints) * 100 if total_complaints > 0 else 0
+    
+    # Generate complaints by category
+    complaints_by_category = []
+    for service in SERVICE_CATEGORIES:
+        complaints_by_category.append({
+            "category": service["name"],
+            "count": random.randint(20, 80)
+        })
+    
+    # Generate queries by service
+    queries_by_service = []
+    for service in SERVICE_CATEGORIES:
+        queries_by_service.append({
+            "service": service["name"],
+            "count": random.randint(50, 250)
+        })
+    
+    # Generate daily trend
+    daily_trend = []
+    for i in range(days):
+        date = datetime.now() - timedelta(days=days - i - 1)
+        daily_trend.append({
+            "date": date.strftime("%Y-%m-%d"),
+            "count": random.randint(30, 60)
+        })
+    
+    return {
+        "total_queries": total_queries,
+        "total_complaints": total_complaints,
+        "resolved_complaints": resolved_complaints,
+        "resolution_rate": resolution_rate,
+        "complaints_by_category": complaints_by_category,
+        "queries_by_service": queries_by_service,
+        "daily_trend": daily_trend,
+        "active_users": random.randint(1100, 1200),
+        "satisfaction_rate": round(random.uniform(4.0, 4.5), 1)
+    }
+
+
+def get_history_data(user_id="demo_user_001", limit=50):
+    """
+    Generate realistic query history for demo purposes.
+    This replaces the external API call to /history.
+    
+    Args:
+        user_id: User identifier
+        limit: Maximum number of history records
+        
+    Returns:
+        list: Query history records
+    """
+    history = []
+    
+    # Sample queries in different languages
+    sample_queries = [
+        {"query": "मेरी पेंशन कब आएगी?", "service": "Pension", "category": "pension"},
+        {"query": "राशन कार्ड की स्थिति क्या है?", "service": "Ration Card", "category": "ration"},
+        {"query": "बिजली की शिकायत करनी है", "service": "Electricity", "category": "electricity"},
+        {"query": "PM-Kisan की अगली किस्त कब आएगी?", "service": "PM-Kisan", "category": "pmkisan"},
+        {"query": "पानी की सप्लाई बंद है", "service": "Water Supply", "category": "water"},
+        {"query": "स्वास्थ्य शिविर कब लगेगा?", "service": "Health Camp", "category": "health"},
+    ]
+    
+    statuses = ["Resolved", "Pending", "In Progress", "Completed"]
+    
+    # Generate realistic history records
+    num_records = min(random.randint(10, 20), limit)
+    for i in range(num_records):
+        query_data = random.choice(sample_queries)
+        days_ago = random.randint(0, 30)
+        date = datetime.now() - timedelta(days=days_ago)
+        
+        history.append({
+            "id": f"QRY-2024-{1000 + i:05d}",
+            "query": query_data["query"],
+            "date": date.strftime("%Y-%m-%d %H:%M"),
+            "service": query_data["service"],
+            "status": random.choice(statuses),
+            "resolution": f"{random.randint(1, 48)} hours"
+        })
+    
+    # Sort by date (newest first)
+    history.sort(key=lambda x: x["date"], reverse=True)
+    
+    return history
+
+
+def analyze_query(text, language="hi", user_id="demo_user_001"):
+    """
+    Analyze user query and generate AI response (simulated).
+    This replaces the external API call to /analyze.
+    
+    Args:
+        text: User query text
+        language: Language code
+        user_id: User identifier
+        
+    Returns:
+        dict: Analysis result with intent, category, and response
+    """
+    text_lower = text.lower()
+    
+    # Intent detection based on keywords
+    if any(word in text_lower for word in ["पेंशन", "pension", "পেনশন", "పెన్షన్"]):
+        category = "Pension"
+        intent = "check_status"
+        response = "आपकी पेंशन इस महीने की 5 तारीख को आ गई है। ₹1000 की राशि आपके खाते में जमा हो गई है। अगली पेंशन अगले महीने की 5 तारीख को आएगी।"
+    elif any(word in text_lower for word in ["राशन", "ration", "রেশন", "రేషన్"]):
+        category = "Ration Card"
+        intent = "information"
+        response = "आपका राशन कार्ड सक्रिय है। आप अपने नजदीकी राशन की दुकान से राशन ले सकते हैं। इस महीने का कोटा: 5 किलो चावल, 2 किलो गेहूं, 1 किलो चीनी।"
+    elif any(word in text_lower for word in ["बिजली", "electricity", "বিদ্যুত", "విద్యుత్"]):
+        category = "Electricity"
+        intent = "complaint"
+        response = "आपकी शिकायत दर्ज कर ली गई है। शिकायत संख्या: ELC-2024-00457. बिजली विभाग को सूचित किया गया है। 24 घंटे में समस्या हल हो जाएगी।"
+    elif any(word in text_lower for word in ["किसान", "kisan", "farmer", "কৃষক", "రైతు"]):
+        category = "PM-Kisan"
+        intent = "check_status"
+        response = "PM-Kisan की अगली किस्त 15 फरवरी 2024 को आएगी। ₹2000 सीधे आपके खाते में जमा होंगे। आपकी किस्त का स्टेटस: स्वीकृत।"
+    elif any(word in text_lower for word in ["पानी", "water", "জল", "నీరు", "paani"]):
+        category = "Water Supply"
+        intent = "complaint"
+        response = "पानी की सप्लाई की शिकायत दर्ज की गई है। शिकायत संख्या: WTR-2024-00823. जल विभाग को तुरंत सूचित किया गया है। 48 घंटे में समाधान होगा।"
+    elif any(word in text_lower for word in ["स्वास्थ्य", "health", "স্বাস্থ্য", "ఆరోగ్యం", "शिविर", "camp"]):
+        category = "Health Camp"
+        intent = "information"
+        response = "अगला स्वास्थ्य शिविर 15 फरवरी 2024 को आपके गाँव के प्राथमिक स्वास्थ्य केंद्र में लगेगा। समय: सुबह 10 बजे से शाम 4 बजे तक।"
+    else:
+        category = "General"
+        intent = "information"
+        response = "आपका प्रश्न दर्ज किया गया है। हमारी टीम जल्द ही आपसे संपर्क करेगी। अधिक जानकारी के लिए 1800-GRAMA-HELP पर कॉल करें।"
+    
+    confidence = random.uniform(0.82, 0.96)
+    
+    return {
+        "detected_intent": intent,
+        "service_category": category,
+        "confidence": confidence,
+        "ai_response": response,
+        "query_id": f"QRY-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+    }
+
+
 # Session state initialization
 if "current_user" not in st.session_state:
     st.session_state.current_user = "demo_user_001"
@@ -252,31 +414,25 @@ if page == "Home":
 
     st.markdown("---")
 
-    # Quick stats
+    # Quick stats - Using internal mock data instead of API call
     st.markdown("### 📊 Live Statistics")
-
-    try:
-        response = requests.post(
-            f"{API_BASE_URL}/dashboard-data", json={"days": 30}, timeout=5
-        )
-        if response.status_code == 200:
-            data = response.json()["data"]
-
-            col1, col2, col3, col4 = st.columns(4)
-
-            with col1:
-                st.metric("Total Queries", f"{data['total_queries']:,}")
-
-            with col2:
-                st.metric("Total Complaints", f"{data['total_complaints']:,}")
-
-            with col3:
-                st.metric("Resolved", f"{data['resolved_complaints']:,}")
-
-            with col4:
-                st.metric("Resolution Rate", f"{data['resolution_rate']:.1f}%")
-    except:
-        st.warning("Unable to load statistics. Please check if backend is running.")
+    
+    # Cloud Demo Mode: Using internal data function
+    data = get_dashboard_data(days=30)
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.metric("Total Queries", f"{data['total_queries']:,}")
+    
+    with col2:
+        st.metric("Total Complaints", f"{data['total_complaints']:,}")
+    
+    with col3:
+        st.metric("Resolved", f"{data['resolved_complaints']:,}")
+    
+    with col4:
+        st.metric("Resolution Rate", f"{data['resolution_rate']:.1f}%")
 
     st.markdown("---")
 
@@ -331,28 +487,25 @@ elif page == "Voice Demo":
         if st.button("🔊 Process Query", type="primary", use_container_width=True):
             if query_text:
                 with st.spinner("Processing your query..."):
-                    try:
-                        response = requests.post(
-                            f"{API_BASE_URL}/analyze",
-                            json={
-                                "text": query_text,
-                                "language": selected_language["code"],
-                                "user_id": st.session_state.current_user,
-                            },
-                            timeout=10,
-                        )
-
-                        if response.status_code == 200:
-                            result = response.json()
-                            st.session_state.last_response = result
-                            st.success("✅ Query processed successfully!")
-                        else:
-                            st.error("Failed to process query")
-                    except Exception as e:
-                        st.error(f"Error: {str(e)}")
-                        st.warning(
-                            "Make sure the backend server is running: `python backend/app/main.py`"
-                        )
+                    # Cloud Demo Mode: Using internal analysis function instead of API call
+                    result = analyze_query(
+                        text=query_text,
+                        language=selected_language["code"],
+                        user_id=st.session_state.current_user
+                    )
+                    st.session_state.last_response = result
+                    
+                    # Add to history
+                    st.session_state.query_history.append({
+                        "query": query_text,
+                        "response": result["ai_response"],
+                        "intent": result["detected_intent"],
+                        "category": result["service_category"],
+                        "confidence": result["confidence"],
+                        "timestamp": datetime.now()
+                    })
+                    
+                    st.success("✅ Query processed successfully!")
             else:
                 st.warning("Please enter a query")
 
@@ -438,121 +591,108 @@ elif page == "Dashboard":
     days_map = {"Last 7 Days": 7, "Last 30 Days": 30, "Last 90 Days": 90}
     days = days_map[date_range]
 
-    try:
-        response = requests.post(
-            f"{API_BASE_URL}/dashboard-data", json={"days": days}, timeout=5
+    # Cloud Demo Mode: Using internal data function instead of API call
+    data = get_dashboard_data(days=days)
+    
+    # Key metrics
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown(
+            f"""
+        <div class="stats-card">
+            <p class="stats-number">{data['total_queries']}</p>
+            <p class="stats-label">Total Queries</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
         )
-
-        if response.status_code == 200:
-            data = response.json()["data"]
-
-            # Key metrics
-            col1, col2, col3, col4 = st.columns(4)
-
-            with col1:
-                st.markdown(
-                    f"""
-                <div class="stats-card">
-                    <p class="stats-number">{data['total_queries']}</p>
-                    <p class="stats-label">Total Queries</p>
-                </div>
-                """,
-                    unsafe_allow_html=True,
-                )
-
-            with col2:
-                st.markdown(
-                    f"""
-                <div class="stats-card">
-                    <p class="stats-number">{data['total_complaints']}</p>
-                    <p class="stats-label">Total Complaints</p>
-                </div>
-                """,
-                    unsafe_allow_html=True,
-                )
-
-            with col3:
-                st.markdown(
-                    f"""
-                <div class="stats-card">
-                    <p class="stats-number">{data['resolved_complaints']}</p>
-                    <p class="stats-label">Resolved</p>
-                </div>
-                """,
-                    unsafe_allow_html=True,
-                )
-
-            with col4:
-                st.markdown(
-                    f"""
-                <div class="stats-card">
-                    <p class="stats-number">{data['resolution_rate']:.1f}%</p>
-                    <p class="stats-label">Resolution Rate</p>
-                </div>
-                """,
-                    unsafe_allow_html=True,
-                )
-
-            st.markdown("---")
-
-            # Charts
-            col1, col2 = st.columns(2)
-
-            with col1:
-                st.markdown("### 📈 Complaints by Category")
-
-                if data["complaints_by_category"]:
-                    df_complaints = pd.DataFrame(data["complaints_by_category"])
-                    fig = px.pie(
-                        df_complaints,
-                        values="count",
-                        names="category",
-                        title="Distribution of Complaints",
-                    )
-                    st.plotly_chart(fig, use_container_width=True)
-                else:
-                    st.info("No complaint data available")
-
-            with col2:
-                st.markdown("### 📊 Queries by Service")
-
-                if data["queries_by_service"]:
-                    df_queries = pd.DataFrame(data["queries_by_service"])
-                    fig = px.bar(
-                        df_queries,
-                        x="service",
-                        y="count",
-                        title="Service Usage",
-                        color="count",
-                    )
-                    st.plotly_chart(fig, use_container_width=True)
-                else:
-                    st.info("No query data available")
-
-            # Daily trend
-            st.markdown("---")
-            st.markdown("### 📅 Daily Query Trend")
-
-            if data["daily_trend"]:
-                df_trend = pd.DataFrame(data["daily_trend"])
-                fig = px.line(
-                    df_trend,
-                    x="date",
-                    y="count",
-                    title="Queries Over Time",
-                    markers=True,
-                )
-                st.plotly_chart(fig, use_container_width=True)
-            else:
-                st.info("No trend data available")
-
+    
+    with col2:
+        st.markdown(
+            f"""
+        <div class="stats-card">
+            <p class="stats-number">{data['total_complaints']}</p>
+            <p class="stats-label">Total Complaints</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+    
+    with col3:
+        st.markdown(
+            f"""
+        <div class="stats-card">
+            <p class="stats-number">{data['resolved_complaints']}</p>
+            <p class="stats-label">Resolved</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+    
+    with col4:
+        st.markdown(
+            f"""
+        <div class="stats-card">
+            <p class="stats-number">{data['resolution_rate']:.1f}%</p>
+            <p class="stats-label">Resolution Rate</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+    
+    st.markdown("---")
+    
+    # Charts
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("### 📈 Complaints by Category")
+        
+        if data["complaints_by_category"]:
+            df_complaints = pd.DataFrame(data["complaints_by_category"])
+            fig = px.pie(
+                df_complaints,
+                values="count",
+                names="category",
+                title="Distribution of Complaints",
+            )
+            st.plotly_chart(fig, use_container_width=True)
         else:
-            st.error("Failed to load dashboard data")
-    except Exception as e:
-        st.error(f"Error loading dashboard: {str(e)}")
-        st.warning(
-            "Make sure the backend server is running: `python backend/app/main.py`"
+            st.info("No complaint data available")
+    
+    with col2:
+        st.markdown("### 📊 Queries by Service")
+        
+        if data["queries_by_service"]:
+            df_queries = pd.DataFrame(data["queries_by_service"])
+            fig = px.bar(
+                df_queries,
+                x="service",
+                y="count",
+                title="Service Usage",
+                color="count",
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            st.info("No query data available")
+    
+    # Daily trend
+    st.markdown("---")
+    st.markdown("### 📅 Daily Query Trend")
+    
+    if data["daily_trend"]:
+        df_trend = pd.DataFrame(data["daily_trend"])
+        fig = px.line(
+            df_trend,
+            x="date",
+            y="count",
+            title="Queries Over Time",
+            markers=True,
         )
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("No trend data available")
 
 elif page == "History":
     # User history page
@@ -560,51 +700,50 @@ elif page == "History":
 
     st.markdown("### Your Recent Interactions")
 
-    try:
-        response = requests.post(
-            f"{API_BASE_URL}/history",
-            json={"user_id": st.session_state.current_user, "limit": 50},
-            timeout=5,
+    # Cloud Demo Mode: Using internal data function instead of API call
+    # First check session state history
+    if st.session_state.query_history:
+        # Use session history if available
+        history = []
+        for idx, item in enumerate(st.session_state.query_history):
+            history.append({
+                "id": f"QRY-{datetime.now().strftime('%Y%m%d')}-{idx+1:03d}",
+                "query": item.get("query", ""),
+                "date": item.get("timestamp", datetime.now()).strftime("%Y-%m-%d %H:%M"),
+                "service": item.get("category", "General"),
+                "status": "Processed",
+                "resolution": "Instant"
+            })
+    else:
+        # Generate demo history data
+        history = get_history_data(
+            user_id=st.session_state.current_user,
+            limit=50
         )
-
-        if response.status_code == 200:
-            history = response.json()["history"]
-
-            if history:
-                df = pd.DataFrame(history)
-                st.dataframe(
-                    df,
-                    use_container_width=True,
-                    column_config={
-                        "id": "Query ID",
-                        "query": "Query Text",
-                        "date": "Date",
-                        "service": "Service",
-                        "status": "Status",
-                        "resolution": "Resolution",
-                    },
-                )
-            else:
-                st.info("No query history available. Try the Voice Demo!")
-
-                if st.button("Seed Demo Data"):
-                    try:
-                        seed_response = requests.post(
-                            f"{API_BASE_URL}/seed-demo", timeout=5
-                        )
-                        if seed_response.status_code == 200:
-                            st.success("Demo data created! Refresh the page.")
-                        else:
-                            st.error("Failed to seed data")
-                    except:
-                        st.error("Error seeding data")
-        else:
-            st.error("Failed to load history")
-    except Exception as e:
-        st.error(f"Error loading history: {str(e)}")
-        st.warning(
-            "Make sure the backend server is running: `python backend/app/main.py`"
+    
+    if history:
+        df = pd.DataFrame(history)
+        st.dataframe(
+            df,
+            use_container_width=True,
+            column_config={
+                "id": "Query ID",
+                "query": "Query Text",
+                "date": "Date",
+                "service": "Service",
+                "status": "Status",
+                "resolution": "Resolution",
+            },
         )
+        
+        st.markdown("---")
+        st.info(f"📊 Total queries in history: {len(history)}")
+    else:
+        st.info("📭 No query history available yet. Try the Voice Demo to get started!")
+        
+        if st.button("▶️ Go to Voice Demo", type="primary", use_container_width=True):
+            # Redirect to Voice Demo page (in single-page app, just show message)
+            st.info("Please select 'Voice Demo' from the navigation menu to start.")
 
 elif page == "About":
     # About page
