@@ -1,7 +1,7 @@
 # Backend Framework
-fastapi==0.109.0
+fastapi==0.109.1
 uvicorn[standard]==0.27.0
-python-multipart==0.0.6
+python-multipart==0.0.22
 
 # Frontend
 streamlit==1.30.0
@@ -41,7 +41,7 @@ pytz==2023.3
 loguru==0.7.2
 
 # Security
-cryptography==41.0.7
+cryptography==42.0.4
 
 # Development
 pytest==7.4.4
