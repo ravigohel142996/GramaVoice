@@ -3,6 +3,7 @@
 
 # Frontend Framework
 streamlit
+streamlit-lottie
 
 # Data Processing & Visualization
 pandas
