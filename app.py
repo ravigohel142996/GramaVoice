@@ -1,12 +1,12 @@
 """
 GramaVoice - Voice-Powered Rural Service Gateway
-Streamlit Cloud Compatible Version - Modern UI/UX Edition
+Streamlit Cloud Compatible Version - Premium UI/UX Edition
 
 This app demonstrates a voice-AI powered platform for rural India with
-startup-level UI/UX featuring glassmorphism, Lottie animations, and mobile-first design.
+startup-level premium UI/UX featuring clean design, glassmorphism, and mobile-first layout.
 
 Author: GramaVoice Team
-Version: 3.0.0 (Modern UI/UX)
+Version: 4.0.0 (Premium UI/UX)
 """
 
 import streamlit as st
@@ -22,7 +22,7 @@ from streamlit_lottie import st_lottie
 # ==================== CONFIGURATION ====================
 
 APP_NAME = "GramaVoice"
-APP_VERSION = "3.0.0"
+APP_VERSION = "4.0.0"
 
 # Supported languages
 SUPPORTED_LANGUAGES = [
@@ -87,199 +87,442 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ==================== CUSTOM CSS ====================
+# ==================== CUSTOM CSS - PREMIUM UI/UX ====================
 
 st.markdown(
     """
 <style>
-    /* Modern Blue/White Theme - Minimal & Clean */
+    /* ============================================
+       PREMIUM DESIGN SYSTEM - Clean & Minimal
+       ============================================ */
+    
+    /* Color Palette */
     :root {
-        --primary-blue: #2563eb;
-        --light-blue: #60a5fa;
-        --sky-blue: #e0f2fe;
-        --white: #ffffff;
-        --text-dark: #1e293b;
-        --text-light: #64748b;
-        --success: #10b981;
-        --border-light: rgba(148, 163, 184, 0.2);
+        --royal-blue: #2563EB;
+        --sky-blue: #38BDF8;
+        --soft-white: #F8FAFC;
+        --pure-white: #FFFFFF;
+        --text-primary: #1E293B;
+        --text-secondary: #64748B;
+        --success: #10B981;
+        --warning: #F59E0B;
+        --error: #EF4444;
+        --border-light: rgba(203, 213, 225, 0.3);
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 10px 30px rgba(37, 99, 235, 0.12);
+        --shadow-xl: 0 20px 50px rgba(37, 99, 235, 0.15);
     }
     
-    /* Global Styles - Mobile First */
+    /* ============================================
+       GLOBAL STYLES - Mobile First
+       ============================================ */
+    
     .stApp {
-        background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+        background: var(--soft-white);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
     }
     
-    /* Glassmorphism Card Base */
-    .glass-card {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
+    /* Typography Improvements */
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--text-primary);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.3;
     }
     
-    .glass-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 40px rgba(37, 99, 235, 0.15);
+    p, span, div {
+        color: var(--text-secondary);
+        line-height: 1.6;
     }
     
-    /* Modern Header - Glassmorphism */
+    /* ============================================
+       GRADIENT HERO HEADER
+       ============================================ */
+    
     .main-header {
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(96, 165, 250, 0.95) 100%);
-        backdrop-filter: blur(10px);
-        padding: 2rem 1rem;
-        border-radius: 20px;
+        background: linear-gradient(135deg, var(--royal-blue) 0%, var(--sky-blue) 100%);
+        padding: 2.5rem 2rem;
+        border-radius: 24px;
         color: white;
         text-align: center;
-        margin-bottom: 2rem;
-        box-shadow: 0 10px 40px rgba(37, 99, 235, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 2.5rem;
+        box-shadow: var(--shadow-xl);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .main-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+        pointer-events: none;
     }
     
     .main-header h1 {
-        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        font-size: clamp(1.75rem, 5vw, 3rem);
         margin: 0;
-        font-weight: 700;
-        letter-spacing: -0.5px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: white;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
     }
     
     .main-header p {
-        font-size: clamp(0.9rem, 2vw, 1.1rem);
-        margin: 0.5rem 0 0 0;
+        font-size: clamp(0.95rem, 2.5vw, 1.25rem);
+        margin: 1rem 0 0 0;
         opacity: 0.95;
+        font-weight: 500;
+        color: white;
+        position: relative;
+        z-index: 1;
     }
     
-    /* Service Card - Glassmorphism */
+    /* ============================================
+       GLASSMORPHISM CARDS
+       ============================================ */
+    
     .service-card {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        padding: 1.25rem;
-        border-radius: 16px;
-        border: 1px solid rgba(37, 99, 235, 0.1);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-        margin-bottom: 1rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: var(--pure-white);
+        padding: 1.75rem;
+        border-radius: 20px;
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-md);
+        margin-bottom: 1.25rem;
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--royal-blue), var(--sky-blue));
+        transform: scaleY(0);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .service-card:hover {
-        transform: translateY(-4px) scale(1.02);
-        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.2);
-        border-color: rgba(37, 99, 235, 0.3);
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--sky-blue);
+    }
+    
+    .service-card:hover::before {
+        transform: scaleY(1);
     }
     
     .service-card h3 {
-        color: var(--primary-blue);
+        color: var(--royal-blue);
         margin-top: 0;
-        font-size: clamp(1rem, 2vw, 1.25rem);
+        margin-bottom: 0.75rem;
+        font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+        font-weight: 700;
     }
     
-    /* Stats Card - Modern Gradient */
+    .service-card p {
+        color: var(--text-secondary);
+        font-size: clamp(0.9rem, 1.8vw, 1rem);
+        margin: 0;
+        line-height: 1.6;
+    }
+    
+    /* ============================================
+       STATS CARDS - Modern Gradient
+       ============================================ */
+    
     .stats-card {
-        background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+        background: linear-gradient(135deg, var(--royal-blue) 0%, var(--sky-blue) 100%);
         color: white;
-        padding: 1.5rem;
-        border-radius: 16px;
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
         text-align: center;
-        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: var(--shadow-lg);
+        transition: all 0.35s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stats-card::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.35s ease;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: var(--shadow-xl);
+    }
+    
+    .stats-card:hover::after {
+        opacity: 1;
     }
     
     .stats-number {
-        font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 700;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 800;
         margin: 0;
+        color: white;
+        position: relative;
+        z-index: 1;
     }
     
     .stats-label {
-        font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+        font-size: clamp(0.85rem, 1.6vw, 1rem);
         opacity: 0.95;
         margin-top: 0.5rem;
+        font-weight: 500;
+        color: white;
+        position: relative;
+        z-index: 1;
     }
     
-    /* Response Card - Light Glass */
+    /* ============================================
+       RESPONSE & ALERT BOXES
+       ============================================ */
+    
     .response-card {
-        background: rgba(224, 242, 254, 0.6);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(37, 99, 235, 0.2);
-        padding: 1.5rem;
+        background: var(--pure-white);
+        border-left: 4px solid var(--sky-blue);
+        padding: 1.75rem;
         border-radius: 16px;
-        margin: 1rem 0;
-        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
+        margin: 1.25rem 0;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-light);
+        transition: all 0.3s ease;
     }
     
-    /* Alert Boxes - Glassmorphism */
+    .response-card:hover {
+        box-shadow: var(--shadow-lg);
+    }
+    
     .info-box {
-        background: rgba(224, 242, 254, 0.6);
-        backdrop-filter: blur(8px);
-        border-left: 4px solid var(--primary-blue);
-        padding: 1rem;
-        border-radius: 12px;
-        margin: 1rem 0;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+        background: rgba(224, 242, 254, 0.4);
+        border-left: 4px solid var(--royal-blue);
+        padding: 1.25rem;
+        border-radius: 14px;
+        margin: 1.25rem 0;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(37, 99, 235, 0.15);
     }
     
     .success-box {
-        background: rgba(209, 250, 229, 0.6);
-        backdrop-filter: blur(8px);
+        background: rgba(209, 250, 229, 0.4);
         border-left: 4px solid var(--success);
-        padding: 1rem;
+        padding: 1.25rem;
+        border-radius: 14px;
+        margin: 1.25rem 0;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+    
+    .warning-box {
+        background: rgba(254, 243, 199, 0.4);
+        border-left: 4px solid var(--warning);
+        padding: 1.25rem;
+        border-radius: 14px;
+        margin: 1.25rem 0;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(245, 158, 11, 0.15);
+    }
+    
+    /* ============================================
+       PROFESSIONAL BUTTONS
+       ============================================ */
+    
+    .stButton > button {
+        background: linear-gradient(135deg, var(--royal-blue) 0%, var(--sky-blue) 100%);
+        color: white;
+        border: none;
         border-radius: 12px;
-        margin: 1rem 0;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+        box-shadow: var(--shadow-md);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
     }
     
-    /* Offline Mode Toggle */
-    .offline-toggle {
-        position: fixed;
-        top: 1rem;
-        right: 1rem;
-        z-index: 999;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        font-size: 0.9rem;
-        border: 1px solid rgba(37, 99, 235, 0.2);
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
     }
     
-    /* Village Pulse Card */
-    .pulse-card {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(37, 99, 235, 0.2);
-        border-radius: 16px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+    .stButton > button:active {
+        transform: translateY(0);
+        box-shadow: var(--shadow-sm);
     }
     
-    /* Mobile Optimizations */
+    /* ============================================
+       SIDEBAR STYLING
+       ============================================ */
+    
+    [data-testid="stSidebar"] {
+        background: var(--pure-white);
+        border-right: 1px solid var(--border-light);
+        box-shadow: var(--shadow-md);
+    }
+    
+    [data-testid="stSidebar"] .stRadio > label {
+        background: var(--soft-white);
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+        margin-bottom: 0.5rem;
+        transition: all 0.3s ease;
+        border: 1px solid var(--border-light);
+    }
+    
+    [data-testid="stSidebar"] .stRadio > label:hover {
+        background: var(--pure-white);
+        border-color: var(--sky-blue);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    /* ============================================
+       LOADING SPINNER
+       ============================================ */
+    
+    .stSpinner > div {
+        border-top-color: var(--royal-blue) !important;
+        border-right-color: var(--sky-blue) !important;
+    }
+    
+    /* ============================================
+       MICRO-ANIMATIONS (CSS Only)
+       ============================================ */
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.8;
+        }
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translateX(-10px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    .service-card, .stats-card {
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    /* ============================================
+       MOBILE RESPONSIVE - Tablet & Phone
+       ============================================ */
+    
     @media (max-width: 768px) {
-        .glass-card, .service-card {
-            padding: 1rem;
+        .main-header {
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
         }
         
+        .service-card {
+            padding: 1.25rem;
+            border-radius: 16px;
+        }
+        
+        .stats-card {
+            padding: 1.5rem 1rem;
+            border-radius: 16px;
+        }
+        
+        .stButton > button {
+            padding: 0.65rem 1.5rem;
+            font-size: 0.95rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
         .main-header {
             padding: 1.5rem 1rem;
             border-radius: 16px;
         }
         
-        .stats-card {
+        .service-card {
             padding: 1rem;
+        }
+        
+        .stats-card {
+            padding: 1.25rem 0.75rem;
         }
     }
     
-    /* Hide Streamlit Branding */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+    /* ============================================
+       BETTER SPACING
+       ============================================ */
     
-    /* Smooth Animations */
+    .block-container {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+    
+    section.main > div {
+        padding-bottom: 2rem;
+    }
+    
+    /* ============================================
+       HIDE STREAMLIT BRANDING
+       ============================================ */
+    
+    #MainMenu {
+        visibility: hidden;
+    }
+    
+    footer {
+        visibility: hidden;
+    }
+    
+    header {
+        visibility: hidden;
+    }
+    
+    /* ============================================
+       SMOOTH TRANSITIONS
+       ============================================ */
+    
     * {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    button, a, input, select, textarea {
+        transition: all 0.2s ease;
     }
 </style>
 """,
