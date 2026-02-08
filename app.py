@@ -256,11 +256,11 @@ st.markdown(
     .stats-card::after {
         content: '';
         position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
         opacity: 0;
         transition: opacity 0.35s ease;
     }
@@ -514,15 +514,25 @@ st.markdown(
     }
     
     /* ============================================
-       SMOOTH TRANSITIONS
+       SMOOTH TRANSITIONS - Targeted Elements
        ============================================ */
     
-    * {
+    .service-card,
+    .stats-card,
+    .response-card,
+    .info-box,
+    .success-box,
+    .warning-box,
+    button,
+    a,
+    [data-testid="stSidebar"] .stRadio > label {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    button, a, input, select, textarea {
-        transition: all 0.2s ease;
+    input,
+    select,
+    textarea {
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 </style>
 """,
