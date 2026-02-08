@@ -204,10 +204,6 @@ From 1 village to 600,000 villages. From my grandmother to 300 million people.
 
 ## Contact
 
-[Your Name]  
-[Email]  
-[Phone]  
-[GitHub/Website]
 
 ## License
 
