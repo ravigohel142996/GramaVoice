@@ -183,6 +183,83 @@ st.markdown(
         position: relative;
         z-index: 1;
     }
+
+    .impact-strip {
+        background: linear-gradient(90deg, #ffedd5 0%, #ecfeff 45%, #dcfce7 100%);
+        border: 1px solid rgba(37, 99, 235, 0.18);
+        border-radius: 16px;
+        padding: 1rem 1.25rem;
+        margin: 0 0 1.5rem 0;
+        text-align: center;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .hero-cta {
+        background: var(--pure-white);
+        border-radius: 20px;
+        padding: 1.5rem;
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-md);
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-cta h3 {
+        margin-top: 0;
+        color: var(--royal-blue);
+    }
+
+    .story-card {
+        background: var(--pure-white);
+        border: 1px solid var(--border-light);
+        border-radius: 18px;
+        padding: 1.25rem;
+        box-shadow: var(--shadow-sm);
+        height: 100%;
+    }
+
+    .story-tag {
+        display: inline-block;
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--royal-blue);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        padding: 0.3rem 0.55rem;
+        border-radius: 999px;
+        margin-bottom: 0.75rem;
+    }
+
+    .trust-badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1rem;
+    }
+
+    .trust-badge {
+        background: rgba(15, 23, 42, 0.03);
+        border: 1px solid var(--border-light);
+        color: var(--text-primary);
+        border-radius: 999px;
+        padding: 0.45rem 0.85rem;
+        font-size: 0.84rem;
+        font-weight: 600;
+    }
+
+    .about-section {
+        background: var(--pure-white);
+        border: 1px solid var(--border-light);
+        border-radius: 20px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .about-section h4 {
+        margin-top: 0;
+        color: var(--royal-blue);
+    }
     
     /* ============================================
        GLASSMORPHISM CARDS
@@ -452,6 +529,17 @@ st.markdown(
             border-radius: 20px;
             margin-bottom: 2rem;
         }
+
+        .impact-strip,
+        .hero-cta,
+        .about-section {
+            padding: 1rem;
+            border-radius: 14px;
+        }
+
+        .story-card {
+            margin-bottom: 0.8rem;
+        }
         
         .service-card {
             padding: 1.25rem;
@@ -489,8 +577,9 @@ st.markdown(
        ============================================ */
     
     .block-container {
-        padding-top: 3rem;
+        padding-top: 2rem;
         padding-bottom: 3rem;
+        max-width: 1200px;
     }
     
     section.main > div {
@@ -782,22 +871,63 @@ with st.sidebar:
 
 # Home Page
 if page == "🏠 Home":
-    st.markdown("## Welcome to GramaVoice 🙏")
     st.markdown(
-        "#### Breaking barriers between Rural India and Government Services through Voice AI"
+        """
+    <div class="impact-strip">
+        🇮🇳 Built for Bharat • Voice-first governance access for every village household • No English required
+    </div>
+    """,
+        unsafe_allow_html=True,
     )
 
-    st.markdown("---")
+    st.markdown("## Aapki Awaaz, Aapka Adhikar 🙏")
+    st.markdown(
+        "#### GramaVoice helps citizens access essential government services through natural voice conversations in their own language."
+    )
 
-    # Feature cards
+    hero_col1, hero_col2 = st.columns([2, 1])
+    with hero_col1:
+        st.markdown(
+            """
+        <div class="hero-cta">
+            <h3>From confusion to confidence in one conversation.</h3>
+            <p>In many villages, people lose benefits not because they are ineligible—but because digital systems are difficult. GramaVoice turns complex portals into a simple voice experience so families can check pension, ration, PM-Kisan, and local services in minutes.</p>
+            <div class="trust-badge-row">
+                <span class="trust-badge">🎙️ Voice-first UX</span>
+                <span class="trust-badge">🗣️ Bharat language support</span>
+                <span class="trust-badge">⚡ Fast grievance routing</span>
+                <span class="trust-badge">🔒 Privacy-conscious design</span>
+            </div>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    with hero_col2:
+        st.markdown(
+            """
+        <div class="service-card">
+            <h3>🌍 Social Impact</h3>
+            <p>Serving rural families, senior citizens, and first-time digital users with a compassionate, low-friction interface.</p>
+        </div>
+        <div class="service-card">
+            <h3>🏛️ Public Service Ready</h3>
+            <p>Designed as a practical demo for district officials, implementation partners, and field teams.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("### Problem → Solution → Impact")
     col1, col2, col3 = st.columns(3)
 
     with col1:
         st.markdown(
             """
-        <div class="service-card">
-            <h3>🎙️ Voice First</h3>
-            <p>Speak in your native language. No typing needed. Just talk naturally.</p>
+        <div class="story-card">
+            <span class="story-tag">PROBLEM</span>
+            <h3>Digital exclusion is real</h3>
+            <p>Citizens struggle with forms, language barriers, and fragmented portals. Benefits are delayed, and trust in systems drops.</p>
         </div>
         """,
             unsafe_allow_html=True,
@@ -806,9 +936,10 @@ if page == "🏠 Home":
     with col2:
         st.markdown(
             """
-        <div class="service-card">
-            <h3>🤖 AI Powered</h3>
-            <p>Smart understanding of your needs using advanced AI technology.</p>
+        <div class="story-card">
+            <span class="story-tag">SOLUTION</span>
+            <h3>Conversation as interface</h3>
+            <p>Users simply speak or type naturally. AI detects intent, routes service requests, and returns clear next steps instantly.</p>
         </div>
         """,
             unsafe_allow_html=True,
@@ -817,9 +948,10 @@ if page == "🏠 Home":
     with col3:
         st.markdown(
             """
-        <div class="service-card">
-            <h3>📱 Easy Access</h3>
-            <p>Simple interface. Call anytime, anywhere. 24/7 availability.</p>
+        <div class="story-card">
+            <span class="story-tag">IMPACT</span>
+            <h3>Faster access, higher dignity</h3>
+            <p>Families save trips, reduce confusion, and gain confidence in welfare systems with inclusive voice-based service delivery.</p>
         </div>
         """,
             unsafe_allow_html=True,
@@ -1461,148 +1593,97 @@ elif page == "📜 History":
 # About Page
 elif page == "ℹ️ About":
     st.markdown("## ℹ️ About GramaVoice")
+    st.markdown("### A startup-style public service platform built for Bharat")
 
     st.markdown(
         """
-    ### 🎯 Voice-Powered Rural Service Gateway for Bharat
-    
-    **GramaVoice** is an innovative AI-powered platform that bridges the digital divide by making 
-    government services accessible to India's 242 million non-literate citizens through voice 
-    interaction in their native languages.
-    
-    ---
-    
-    #### 🌟 Mission
-    
-    Making government services accessible to every Indian, regardless of literacy level, 
-    economic status, or geographical location.
-    
-    ---
-    
-    #### ✨ Key Features
-    
-    - **🗣️ Multi-Language Support**: 15+ Indian languages including regional dialects
-    - **💬 Natural Conversation**: No complex menu navigation - just speak naturally
-    - **⚡ Real-Time Information**: Connected to government databases and portals
-    - **📝 Voice-Based Complaints**: File and track grievances using voice
-    - **🤖 AI-Powered Understanding**: Advanced AI for accurate intent detection
-    - **🕐 24/7 Availability**: Always available, from anywhere in India
-    - **🔒 Secure & Private**: End-to-end encryption and data protection
-    
-    ---
-    
-    #### 🛠️ Technology Stack
-    
-    - **Frontend**: Streamlit (Modern, Responsive UI)
-    - **AI/ML**: OpenAI GPT, Natural Language Processing
-    - **Data**: Pandas, NumPy for analytics
-    - **Visualization**: Matplotlib for charts and graphs
-    - **Infrastructure**: Cloud-native, scalable architecture
-    
-    ---
-    
-    #### 📊 Impact Metrics
-    
-    - **1,247 queries** processed successfully
-    - **342 complaints** filed and tracked
-    - **81.3% resolution rate** achieved
-    - **1,124 active users** in pilot phase
-    - **4.2/5 satisfaction** score from users
-    - **₹12.4 lakhs** in subsidies accessed
-    
-    ---
-    
-    #### 👥 Target Users
-    
-    - 🌾 Rural citizens with limited literacy
-    - 👴 Elderly people who struggle with digital apps
-    - 🚜 Farmers needing quick agricultural information
-    - 👩 Women seeking government welfare schemes
-    - 🎓 Students applying for scholarships
-    - 💼 Small business owners accessing schemes
-    
-    ---
-    
-    #### 🎯 Government Services Covered
-    
-    1. **💰 Pension Services** - Status checks, payments
-    2. **🌾 PM-Kisan** - Farmer subsidies and installments
-    3. **🍚 Ration Card** - PDS entitlements and quotas
-    4. **🏥 Health Services** - Camp schedules, appointments
-    5. **⚡ Electricity** - Complaints and bill payments
-    6. **💧 Water Supply** - Issues and maintenance
-    7. **🏫 Education** - Scholarships and admissions
-    8. **🏡 Housing** - PMAY and rural housing schemes
-    
-    ---
-    
-    #### 📞 Contact & Support
-    
-    **24/7 Helpline**: 1800-GRAMA-HELP  
-    **Email**: support@gramavoice.gov.in  
-    **Website**: www.gramavoice.gov.in  
-    
-    **Support Languages**: Hindi, English, Gujarati, Tamil, Telugu, Malayalam, 
-    Kannada, Marathi, Bengali, Punjabi, and more
-    
-    ---
-    
-    #### 🔒 Privacy & Security
-    
-    - 🔐 End-to-end encryption for all communications
-    - 🛡️ Secure data storage with government standards
-    - ✅ Compliance with IT Act 2000 and privacy laws
-    - 🚫 No data sharing without explicit user consent
-    - 🔄 Regular security audits and updates
-    
-    ---
-    
-    #### 🏆 Awards & Recognition
-    
-    - 🥇 **Digital India Award 2024** - Best Rural Innovation
-    - 🌟 **UN Public Service Award Nominee** - Digital Inclusion
-    - 🎖️ **National eGovernance Award** - Citizen Services
-    - 📱 **Best Rural Tech Solution** - Smart India Hackathon
-    
-    ---
-    
-    #### 🚀 Future Roadmap
-    
-    - [ ] Expansion to all 22 official Indian languages
-    - [ ] WhatsApp integration for wider reach
-    - [ ] Offline SMS-based queries
-    - [ ] Integration with Aadhaar for authentication
-    - [ ] AI-powered grievance tracking
-    - [ ] Mobile app for feature phones
-    - [ ] Video call support for complex queries
-    
-    ---
-    
-    #### 🤝 Partners
-    
-    - Ministry of Rural Development
-    - Digital India Corporation
-    - National Informatics Centre (NIC)
-    - Common Service Centres (CSC)
-    - State Government IT Departments
-    
-    ---
-    
-    #### 💡 Innovation Highlights
-    
-    - **First** voice-first platform for rural government services
-    - **Pioneering** multi-lingual AI for Indian languages
-    - **Breaking barriers** between citizens and governance
-    - **Empowering** 242 million non-literate Indians
-    - **Bridging** the digital divide through voice technology
-    
-    ---
-    
-    **Built with ❤️ for Bharat by the GramaVoice Team**
-    
-    *Version {APP_VERSION} - Cloud Edition*  
-    *Last Updated: February 2024*
-    """
+    <div class="about-section">
+        <h4>🌾 Why GramaVoice exists</h4>
+        <p>In rural India, millions of people are eligible for government schemes but still remain underserved due to literacy gaps, language barriers, and complex digital workflows. GramaVoice reimagines access: no forms-first friction, no app anxiety—just a trusted conversation.</p>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(
+            """
+        <div class="about-section">
+            <h4>🎯 Mission</h4>
+            <p>Enable every citizen—especially rural families, elders, and first-time users—to access services with dignity, clarity, and confidence.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    with col2:
+        st.markdown(
+            """
+        <div class="about-section">
+            <h4>🚀 Vision</h4>
+            <p>To become India’s most trusted voice layer for public services, where governance feels human, responsive, and local-language first.</p>
+        </div>
+        """,
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("### Product Story")
+
+    st.markdown(
+        """
+    <div class="about-section">
+        <h4>Problem → Product → Proof</h4>
+        <p><strong>Problem:</strong> People often travel long distances, wait in lines, and still return without answers.</p>
+        <p><strong>Product:</strong> GramaVoice uses voice interaction and intent detection to simplify pension, ration, PM-Kisan, health, electricity, and water queries.</p>
+        <p><strong>Proof:</strong> The pilot demo already shows strong service engagement, complaint tracking, and measurable satisfaction uplift.</p>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("### Core Trust Signals")
+    st.markdown(
+        """
+    <div class="about-section">
+        <div class="trust-badge-row">
+            <span class="trust-badge">🛡️ Secure by design</span>
+            <span class="trust-badge">🏛️ Gov-service aligned</span>
+            <span class="trust-badge">📞 24x7 support mindset</span>
+            <span class="trust-badge">🧠 AI with explainable intent</span>
+            <span class="trust-badge">📱 Mobile-friendly interface</span>
+        </div>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    stats = st.session_state.demo_stats
+    resolution_rate = (
+        (stats["resolved_complaints"] / stats["total_complaints"]) * 100
+        if stats["total_complaints"] > 0
+        else 0
+    )
+
+    st.markdown("### Snapshot of Current Impact")
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.metric("Queries Processed", f"{stats['total_queries']:,}")
+    with m2:
+        st.metric("Complaints Logged", f"{stats['total_complaints']:,}")
+    with m3:
+        st.metric("Resolution Rate", f"{resolution_rate:.1f}%")
+    with m4:
+        st.metric("User Satisfaction", f"{stats['satisfaction_rate']}/5.0")
+
+    st.markdown(
+        """
+    <div class="impact-strip" style="margin-top: 1rem;">
+        ❤️ Built with empathy for Bharat • Designed for citizens, administrators, and last-mile governance teams
+    </div>
+    """,
+        unsafe_allow_html=True,
     )
 
 # ==================== FOOTER ====================
